@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, useWindowDimensions, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, useWindowDimensions, ImageBackground} from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { firebase } from '../config'
 import Logo from '../assets/temporaryLogoApp.png'
@@ -31,10 +31,7 @@ const SignUpScreen = () => {
       })
   }
   return (
-    <View style={styles.container}
-    behavior = "padding"
-    >
-    <View style={styles.rectangleOverlay} >
+      <ImageBackground style={styles.Background}  source={require('../assets/background.png')} >
 
         <Image source={Logo} 
                style={[styles.logo, {height: height * 0.3}]} 
@@ -70,7 +67,7 @@ const SignUpScreen = () => {
             style={styles.button}
         >
           <Text style={styles.buttonText}>
-          Sign Up!
+          Sign Up
           </Text>
         </TouchableOpacity>
 
@@ -83,8 +80,7 @@ const SignUpScreen = () => {
           Already have an account? {''}<Text style={styles.logInText}>Login now!</Text>
           </Text>
         </TouchableOpacity>
-        </View>
-    </View>
+    </ImageBackground>
   )
 
 }
@@ -93,21 +89,12 @@ export default SignUpScreen
 
 const styles = StyleSheet.create({
 
-container: {
+Background: {
   flex: 1,
-  backgroundColor: '#df28e9',
-},
-rectangleOverlay: {
-  flex: 2,
-  marginTop: '20%',
-  borderBottomLeftRadius: 0,
-  borderBottomRightRadius: 0,
-  borderTopRightRadius: 20,
-  borderTopLeftRadius: 20,
-  backgroundColor: '#f4f4f4',
   alignItems: 'center',
 },
-logo: {
+  logo: {
+  marginTop: "20%",
   width: '70%',
   maxWidth: 300,
   maxHeight: 200,
@@ -152,11 +139,11 @@ buttonText: {
 alreadyAccountText: {
   fontWeight: 'regular',
   fontSize: 16,
-  color: '#292929',
+  color: '#FFF',
 },
 logInText: {
   fontWeight: 'bold',
   fontSize: 16,
-  color: '#df28e9',
+  color: '#FFF',
 },
 })

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, useWindowDimensions } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, useWindowDimensions, ImageBackground} from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { firebase } from '../config'
 import { async } from '@firebase/util'
@@ -8,6 +8,7 @@ import Logo from '../assets/temporaryLogoApp.png'
 
 
 const LoginScreen = () => { 
+
   const navigation = useNavigation()
 
   const [email, setEmail] = useState('')
@@ -34,85 +35,72 @@ const forgotPassword = () => {
 }
   
   return (
-    <View style={styles.container}
-    behavior = "padding"
-    >
-    <View style={styles.rectangleOverlay} >
+      <ImageBackground style={styles.Background}  source={require('../assets/background.png')} >
 
-        <Image source={Logo} 
-               style={[styles.logo, {height: height * 0.3}]} 
-               resizeMode="contain"/>
+          <Image source={Logo} 
+                style={[styles.logo, {height: height * 0.3}]} 
+                resizeMode="contain"/>
 
-        <View style={styles.InputContainer}>
-            <TextInput
-              placeholder="Email"
-              onChangeText={(email) => setEmail(email)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              style = {styles.input}
-            />
-            <TextInput
-              placeholder="Password"
-              onChangeText={(password) => setPassword(password)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              secureTextEntry={true}
-              style = {styles.input}
-            />
-        </View>
-        
-        <TouchableOpacity
-            onPress={() => forgotPassword()}
-            style={styles.forgotPasswordButton}
-        >
-        
-          <Text style={styles.noAccountText}>
-          Forgot {''}<Text style={styles.forgotPasswordText}>password?</Text>
-          </Text>
-        </TouchableOpacity>
+          <View style={styles.InputContainer}>
+              <TextInput
+                placeholder="Email"
+                onChangeText={(email) => setEmail(email)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                style = {styles.input}
+              />
+              <TextInput
+                placeholder="Password"
+                onChangeText={(password) => setPassword(password)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                secureTextEntry={true}
+                style = {styles.input}
+              />
+          </View>
+          
+          <TouchableOpacity
+              onPress={() => forgotPassword()}
+              style={styles.forgotPasswordButton}
+          >
+          
+            <Text style={styles.noAccountText}>
+            Forgot {''}<Text style={styles.forgotPasswordText}>password?</Text>
+            </Text>
+          </TouchableOpacity>
 
 
-        <TouchableOpacity
-            onPress={() => loginUser(email, password)}
-            style={styles.button}
-        >
-          <Text style={styles.buttonText}>
-          Login
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+              onPress={() => loginUser(email, password)}
+              style={styles.button}
+          >
+            <Text style={styles.buttonText}>
+            Login
+            </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-            onPress={() => navigation.navigate('SignUp')}
-            style={styles.signUpButton}
-        >
-        
-          <Text style={styles.noAccountText}>
-          Don't have an account? {''}<Text style={styles.signUpText}>Sign up now!</Text>
-          </Text>
-        </TouchableOpacity>
-        </View>
-    </View>
+          <TouchableOpacity
+              onPress={() => navigation.navigate('SignUp')}
+              style={styles.signUpButton}
+          >
+          
+            <Text style={styles.noAccountText}>
+            Don't have an account? {''}<Text style={styles.signUpText}>Sign up now!</Text>
+            </Text>
+          </TouchableOpacity>
+        </ImageBackground>
   )
 }
 
 export default LoginScreen
 
 const styles = StyleSheet.create({
-  container: {
+  Background: {
     flex: 1,
-    backgroundColor: '#DF28E9',
-  },
-  rectangleOverlay: {
-    flex: 2,
-    marginTop: '20%',
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    backgroundColor: '#f4f4f4',
     alignItems: 'center',
   },
   logo: {
+    marginTop: '20%',
     width: '70%',
     maxWidth: 300,
     maxHeight: 200,
@@ -144,7 +132,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     fontWeight: 'regular',
     fontSize: 16,
-    color: '#DF28E9',
+    color: '#FFFFFF',
   },
   button: {
     marginTop: "40%",
@@ -166,11 +154,11 @@ const styles = StyleSheet.create({
   noAccountText: {
     fontWeight: 'regular',
     fontSize: 16,
-    color: '#292929',
+    color: '#FFFFFF',
   },
   signUpText: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#DF28E9',
+    color: '#FFFFFF',
   },
 });

@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Image, useWindowDimensions, onPress, Slider  } from 'react-native'
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import spongebob from '../assets/spongebob.jpg'
-import Logo from '../assets/temporaryLogoApp.png'
+import Logo from '../assets/temporaryLogoApp2.png'
 
 import { firebase } from '../config'
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { BottomSheetModal, BottomSheetModalProvider, } from '@gorhom/bottom-sheet';
+import { BottomSheet, BottomSheetModal, BottomSheetModalProvider, } from '@gorhom/bottom-sheet';
 
 
 import Chart from "./appScreens/Chart.js"
@@ -22,14 +22,25 @@ const HomeScreen = () => {
   
   // Bottomsheet variables
   const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalRef2 = useRef(null);
   const snapPoints = useMemo(() => ['70%'], []);
+  const snapPoints2 = useMemo(() => ['70%'], []);
+
+
   const openModal = () => {
     bottomSheetModalRef.current.present();
   }
   const closeBottomSheet = () => {
     bottomSheetModalRef.current.close();
   }
-  
+
+    const openModal2 = () => {
+    bottomSheetModalRef2.current.present();
+  }
+  const closeBottomSheet2 = () => {
+    bottomSheetModalRef2.current.close();
+  }
+
   // retrive data from MySQL database with JSON
   const [scanresult, setScanresult] = useState([]);
   const fetchUsers = async () => {
@@ -49,36 +60,42 @@ const HomeScreen = () => {
 
   return (
   <BottomSheetModalProvider>
-      <View style={styles.container}
-      behavior = "padding"
+        <View style={styles.rectangleOverlay}
+        behavior = "padding"
       >
-        <View style={styles.rectangleOverlay}>
+          <TouchableOpacity 
+            onPress={() => {firebase.auth().signOut()}}
+            style={styles.signoutButton}>
+            <Image source={require('../assets/logouticon.png')} 
+                  style={[styles.logouticon]} 
+                  resizeMode="contain"/>
+          </TouchableOpacity>
         
           <Image source={Logo} 
                   style={[styles.spongebob, {height: height * 0.3}]} 
                   resizeMode="contain"
                   />
-
+          <View style={styles.FlexDirection}>
           <TouchableOpacity
             onPress={() => openModal()}
             style={styles.DataSheetButton}>
-              <Text style={styles.signoutText}>
-                DataSheet
-              </Text>
+            <Image source={require('../assets/charticon.png')} 
+                  style={[styles.slidericon]} 
+                  resizeMode="contain"/>
           </TouchableOpacity>
+          
+          <TouchableOpacity
+            onPress={() => openModal2()}
+            style={styles.sliderButton}>
+            <Image source={require('../assets/slidericon.png')} 
+                  style={[styles.slidericon]} 
+                  resizeMode="contain"/>
+        </TouchableOpacity>
+        </View>
 
 
-          <TouchableOpacity 
-            onPress={() => {firebase.auth().signOut()}}
-            style={styles.signoutButton}>
-              <Text style={styles.signoutText}>
-                Sign Out
-              </Text>
-          </TouchableOpacity>
-          <View>
-            <SliderScreen/>
-          </View>
 
+        <View style={styles.BottomSheetColor}>
           <BottomSheetModal
             ref={bottomSheetModalRef}
             index={0}
@@ -97,18 +114,35 @@ const HomeScreen = () => {
               </TouchableOpacity>
                 <View>
                   <Chart/>
-                    {/* {scanresult.map(dataScan => (
-                      <Text key={dataScan.resultid}>                         {dataScan.time}     -      {dataScan.result}</Text>
-                    ))} */}
+                </View>
+              </View>
+            </ScrollView>
+        </BottomSheetModal>
+        
+          <BottomSheetModal
+            ref={bottomSheetModalRef2}
+            index={0}
+            snapPoints={snapPoints2}
+            style={styles.bottomSheetModalStyle2}
+          >
+            <ScrollView>
+              <View style={styles.contentContainer}>
+              <TouchableOpacity
+              onPress = {closeBottomSheet2}>
+                <Text 
+                style={styles.closeText}
+                >
+                  Close
+                </Text>
+              </TouchableOpacity>
+                <View style={styles.SliderContainer}>
+                  <SliderScreen/>
                 </View>
               </View>
             </ScrollView>
           </BottomSheetModal>
-          
+          </View>
         </View>
-      </View>
-    
-    
   </BottomSheetModalProvider>
   )
 }
@@ -116,43 +150,58 @@ const HomeScreen = () => {
 export default HomeScreen
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#df28e9',
-  },
   rectangleOverlay: {
     flex: 2,
-    marginTop: '20%',
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#36393F',
     alignItems: 'center',
   },
   spongebob: {
+    marginTop: "10%",
     width: '70%',
     maxWidth: 300,
     maxHeight: 200,
     marginVertical: '5%',
   },
+  logouticon: {
+    width: "60%",
+    height: "60%",
+  },
+    slidericon: {
+    width: "80%",
+  },
+  FlexDirection: {
+    flexDirection: "row",
+    marginTop: "10%",
+  },
   signoutButton: {
     marginTop: "10%",
     height: 50,
-    width: 200,
-    backgroundColor: '#28b4ee',
+    width: 50,
+    backgroundColor: '#DF28E9',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
+    marginLeft: "75%",
   },
   DataSheetButton: {
-    marginTop: "10%",
     height: 50,
-    width: 200,
-    backgroundColor: '#28b4ee',
+    width: 80,
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     borderRadius: 50,
+    marginHorizontal: "5%",
+
+  },
+    sliderButton: {
+    height: 50,
+    width: 80,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+   borderRadius: 50,
+    marginHorizontal: "5%",
+    
   },
   signoutText: {
     fontWeight: 'regular',
@@ -165,9 +214,13 @@ const styles = StyleSheet.create({
     color: '#DF28E9',
     marginLeft: "5%",
   },  
+  BottomSheetColor: {
+    backgroundColor: "#36393F",
+  },
   bottomSheetModalStyle: {
     alignContent: "center",
     justifyContent: "center",
+    backgroundColor: 'grey',
 
     shadowColor: "#000",
     shadowOffset: {
@@ -177,7 +230,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    
   },
+  bottomSheetModalStyle2: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+
+  SliderContainer: {
+    paddingHorizontal: "5%",
+
+  }
   
 })
