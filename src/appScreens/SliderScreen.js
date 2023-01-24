@@ -136,16 +136,16 @@ return(
       style= {{borderRadius: 20,}}
       >
       <Slider
-          enabled={false}
-          style={{ width: Dimensions.get('window').width}}
-          minimumValue={0}
-          maximumValue={500}
-          value={value}
-          thumbImage={ThumbImage}
-          minimumTrackTintColor={'rgba(0,0,0,0.0)'}
-          maximumTrackTintColor={'rgba(0,0,0,0.0)'}
-          thumbTintColor={''}
-          thumbStyle = {{ width:40, height:40}}
+        disabled={true}
+        style={{ width: Dimensions.get('window').width }}
+        minimumValue={0}
+        maximumValue={500}
+        value={value}
+        // thumbImage={ThumbImage}
+        minimumTrackTintColor={'rgba(0,0,0,0.0)'}
+        maximumTrackTintColor={'rgba(0,0,0,0.0)'}
+        thumbTintColor={ "#000"}
+        thumbStyle = {{ width:40, height:40}}
       />
     </LinearGradient>
   </View>

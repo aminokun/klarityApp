@@ -220,7 +220,6 @@ const styles = StyleSheet.create({
   bottomSheetModalStyle: {
     alignContent: "center",
     justifyContent: "center",
-    backgroundColor: 'grey',
 
     shadowColor: "#000",
     shadowOffset: {

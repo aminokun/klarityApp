@@ -29,10 +29,12 @@ const HideKeyboard = ({ children }) => (
         };
 
         for (let i = jsonData.length - 1; i >= jsonData.length - readingAmount; i--) {
-          const item = jsonData[i];
-          chartData.labels.push(item.time);
-          chartData.datasets[0].data.push(item.result);
+            const item = jsonData[i];
+            chartData.labels.push(item.time);
+            chartData.datasets[0].data.push(item.result);
         }
+
+
         setData(chartData);
       });
   }, [readingAmount]);
@@ -44,7 +46,8 @@ const HideKeyboard = ({ children }) => (
     const chartConfig = {
     backgroundGradientFrom: '#28b4ee',
     backgroundGradientTo: '#c228ee',
-    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    // xLabels: chartData.labels
   };
 
   return (
